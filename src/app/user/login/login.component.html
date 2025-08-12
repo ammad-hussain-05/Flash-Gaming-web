@@ -1,0 +1,56 @@
+<!-- Login Form -->
+           <app-alert *ngIf="showAlert"  [color] = "alertColor">
+            {{ alertMsg }}
+           </app-alert>
+          <form #loginForm = "ngForm" (ngSubmit)="login()" >
+            <!-- Email -->
+            <div class="mb-3">
+              <label class="inline-block mb-2">Email</label>
+              <input #email = "ngModel"  type="email"  name="email" [(ngModel)] = "credentials.email"
+                class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
+                  duration-500 focus:outline-none rounded bg-transparent
+                  focus:border-indigo-400"
+                placeholder="Enter Email" 
+               
+                required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+               
+                />
+                 <!-- <p  class="text-red-500" *ngIf ="email.errors && email.touched && email.dirty" >
+                     Email is invalid
+                 </p> -->
+                 <!-- yei maine template driven forms use krke email ki validation ki hai yri approach achi h-->
+                    <p  class="text-red-500" *ngIf="email.errors?.['required'] && email.touched && email.dirty">
+                         Email is required.
+                    </p>
+
+                    <p  class="text-red-500" *ngIf="email.errors?.['pattern'] && email.touched">
+                        Invalid email format.
+                    </p>
+
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+              <label class="inline-block mb-2">Password</label>
+              <input #password="ngModel" name="password" type="password"   [(ngModel)]="credentials.password"
+                class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition
+                duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+                placeholder="Password"  required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" />
+                       <p class="text-red-500"  *ngIf = "password.errors?.['required'] &&
+                       password.touched && password.dirty">
+                         password is required           
+                    </p>
+                    <p class="text-red-500"  *ngIf="password.errors?.['pattern'] && password.touched" >
+                         password must be at least 8 characters
+                            & must contain at least 1 uppercase letter, 
+                            1 lowercase letter, and 1 number 
+                    </p>
+            </div>                                                    
+            <button type="submit"
+              class="block w-full bg-indigo-400 text-black font-bold py-1.5 px-3 rounded transition
+                hover:bg-indigo-500   disabled: opacity-50 disabled:bg-indigo-100 "
+                 [disabled] = "loginForm.invalid  || inSubmission "> 
+              Submit
+            </button>
+          </form>
+
+          
